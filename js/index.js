@@ -2,9 +2,26 @@ let elInput = findEl(".js-input");
 let elList = findEl(".js-todos-list");
 
 let localData = localStorage.getItem("todos");
-let todos = JSON.parse(localData) ? JSON.parse(localData) : [];
+let todos = localData ? JSON.parse(localData) : [];
 
-console.log(JSON.parse(localData));
+elList.addEventListener("click", (evt) => {
+  if (evt.target.mathes(".deleted")) {
+    handelAddTodo(evt);
+  }
+});
+
+let handelDeleteTodo = (evt) => {
+  let filteredArr = [];
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].id !== evt.target.dataset.id) {
+      filteredArr.push(todos[i]);
+    }
+  }
+
+  todos = filteredArr;
+  localStorage.setItem("todos", JSON.stringify(filteredArr));
+  renderElements(filteredArr);
+};
 
 function createTodoItem(todo) {
   let elLi = createEl("li");
@@ -27,7 +44,9 @@ function createTodoItem(todo) {
   elEditBtn.textContent = "Edit";
   elEditBtn.className = "btn btn-success";
   elDeleteBtn.textContent = "Delete";
-  elDeleteBtn.className = "btn btn-danger ms-1";
+  elDeleteBtn.className = "btn btn-danger ms-1 delete";
+  elDeleteBtn.dataset.id = todo.id;
+  elDeleteBtn.addEventListener("click", handelDeleteTodo);
 
   elDiv.appendChild(elEditBtn);
   elDiv.appendChild(elDeleteBtn);
@@ -44,16 +63,14 @@ function renderElements(array) {
   }
 }
 
-let i = todos[-1] ? todos[-1].id : 1;
 function handelAddTodo(evt) {
   if (evt.keyCode === 13) {
     let newTodo = {
-      id: ++i,
+      id: uuid.v4(),
       title: elInput.value,
       isCompleted: false,
     };
 
-    console.log(i);
     todos.unshift(newTodo);
 
     localStorage.setItem("todos", JSON.stringify(todos));
