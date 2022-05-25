@@ -81,6 +81,7 @@ let handelEditTodo = (evt) => {
   let foundTodoIndex = todos.findIndex((element) => element.id === evt.target.dataset.id)
   let editText = prompt('O\'zgartir', todos[foundTodoIndex].title)
   todos[foundTodoIndex].title = editText
+  
   renderElements(todos)
 }
 
