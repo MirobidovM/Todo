@@ -4,19 +4,6 @@ let elList = findEl(".js-todos-list");
 let localData = localStorage.getItem("todos");
 let todos = localData ? JSON.parse(localData) : [];
 
-let handelDeleteTodo = (evt) => {
-  let filteredArr = [];
-
-  for (let i = 0; i < todos.length; i++) {
-    if (todos[i].id !== evt.target.dataset.id) {
-      filteredArr.push(todos[i]);
-    }
-  }
-
-  todos = filteredArr;
-  localStorage.setItem("todos", JSON.stringify(filteredArr));
-  renderElements(filteredArr);
-};
 
 function createTodoItem(todo) {
   let elLi = createEl("li");
@@ -37,7 +24,8 @@ function createTodoItem(todo) {
   elDiv.className = "ms-auto";
 
   elEditBtn.textContent = "Edit";
-  elEditBtn.className = "btn btn-success";
+  elEditBtn.className = "btn btn-success edit";
+  elEditBtn.dataset.id = todo.id;
   elDeleteBtn.textContent = "Delete";
   elDeleteBtn.className = "btn btn-danger ms-1 delete";
   elDeleteBtn.dataset.id = todo.id;
@@ -53,7 +41,7 @@ function createTodoItem(todo) {
 function renderElements(array) {
   elList.innerHTML = null;
 
-  for (let i = 0; i < array.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     createTodoItem(array[i]);
   }
 }
@@ -68,18 +56,38 @@ function handelAddTodo(evt) {
 
     todos.unshift(newTodo);
 
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem('todos', JSON.stringify(todos));
 
     renderElements(todos);
     elInput.value = null;
-    console.log(todos);
   }
 }
 
-elInput.addEventListener("keyup", handelAddTodo);
-elList.addEventListener("click", (evt) => {
-  if (evt.target.matches(".delete")) {
-    handelAddTodo(evt);
+let handelDeleteTodo = (evt) => {
+  let filteredArr = []
+
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].id !== evt.target.dataset.id) {
+      filteredArr.push(todos[i])
+    }
   }
-});
+
+  todos = filteredArr
+  localStorage.setItem("todos", JSON.stringify(filteredArr))
+  renderElements(filteredArr);
+};
+
+let handelEditTodo = (evt) => {
+  let foundTodoIndex = todos.findIndex((element) => element.id === evt.target.dataset.id)
+  let editText = prompt('O\'zgartir', todos[foundTodoIndex].title)
+  todos[foundTodoIndex].title = editText
+  renderElements(todos)
+}
+
+
+elInput.addEventListener('keyup', handelAddTodo);
+elList.addEventListener('click', (evt) => {
+  if (evt.target.matches('.delete')) return handelDeleteTodo(evt)
+  if (evt.target.matches('.edit')) return handelEditTodo(evt)
+})
 renderElements(todos);
