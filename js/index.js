@@ -52,6 +52,7 @@ function createTodoItem(todo) {
 
 function renderElements(array) {
   elList.innerHTML = null;
+
   for (let i = 0; i < array.length; i++) {
     createTodoItem(array[i]);
   }
