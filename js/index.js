@@ -4,14 +4,9 @@ let elList = findEl(".js-todos-list");
 let localData = localStorage.getItem("todos");
 let todos = localData ? JSON.parse(localData) : [];
 
-elList.addEventListener("click", (evt) => {
-  if (evt.target.mathes(".deleted")) {
-    handelAddTodo(evt);
-  }
-});
-
 let handelDeleteTodo = (evt) => {
   let filteredArr = [];
+
   for (let i = 0; i < todos.length; i++) {
     if (todos[i].id !== evt.target.dataset.id) {
       filteredArr.push(todos[i]);
@@ -46,7 +41,6 @@ function createTodoItem(todo) {
   elDeleteBtn.textContent = "Delete";
   elDeleteBtn.className = "btn btn-danger ms-1 delete";
   elDeleteBtn.dataset.id = todo.id;
-  elDeleteBtn.addEventListener("click", handelDeleteTodo);
 
   elDiv.appendChild(elEditBtn);
   elDiv.appendChild(elDeleteBtn);
@@ -82,4 +76,9 @@ function handelAddTodo(evt) {
 }
 
 elInput.addEventListener("keyup", handelAddTodo);
+elList.addEventListener("click", (evt) => {
+  if (evt.target.matches(".delete")) {
+    handelAddTodo(evt);
+  }
+});
 renderElements(todos);
