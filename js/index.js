@@ -20,6 +20,7 @@ function createTodoItem(todo) {
   elCheckboxInput.dataset.id = todo.id;
 
   elText.textContent = todo.title;
+
   elText.className = "m-0 ms-2";
   if (todo.isCompleted) {
     elText.classList.add("text-decoration-line-through");
