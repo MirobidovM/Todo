@@ -111,4 +111,6 @@ elList.addEventListener("click", (evt) => {
   if (evt.target.matches(".completed")) return handelCompletedTodo(evt);
 });
 
+
+
 renderElements(todos);
