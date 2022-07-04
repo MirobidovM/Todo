@@ -13,13 +13,9 @@ function createTodoItem(todo) {
   let elDeleteBtn = createEl('button');
 
   elLi.className = 'd-flex align-items-center py-2 px-3 border-bottom';
-
   elCheckboxInput.checked = todo.isCompleted;
-
   elCheckboxInput.type = 'checkbox';
-
   elCheckboxInput.className = 'form-check-input mt-0 completed';
-
   elCheckboxInput.dataset.id = todo.id;
 
   elText.textContent = todo.title;
