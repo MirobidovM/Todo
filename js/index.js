@@ -11,6 +11,7 @@ function createTodoItem(todo) {
   let elDiv = createEl('div');
   let elEditBtn = createEl('button');
   let elDeleteBtn = createEl('button');
+
   elLi.className = 'd-flex align-items-center py-2 px-3 border-bottom';
   elCheckboxInput.checked = todo.isCompleted;
   elCheckboxInput.type = 'checkbox';
