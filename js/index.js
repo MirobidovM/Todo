@@ -16,6 +16,7 @@ function createTodoItem(todo) {
   elCheckboxInput.type = 'checkbox';
   elCheckboxInput.className = 'form-check-input mt-0 completed';
   elCheckboxInput.dataset.id = todo.id;
+
   elText.textContent = todo.title;
 
   elText.className = 'm-0 ms-2';
