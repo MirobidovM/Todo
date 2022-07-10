@@ -11,13 +11,11 @@ function createTodoItem(todo) {
   let elDiv = createEl('div');
   let elEditBtn = createEl('button');
   let elDeleteBtn = createEl('button');
-
   elLi.className = 'd-flex align-items-center py-2 px-3 border-bottom';
   elCheckboxInput.checked = todo.isCompleted;
   elCheckboxInput.type = 'checkbox';
   elCheckboxInput.className = 'form-check-input mt-0 completed';
   elCheckboxInput.dataset.id = todo.id;
-
   elText.textContent = todo.title;
 
   elText.className = 'm-0 ms-2';
